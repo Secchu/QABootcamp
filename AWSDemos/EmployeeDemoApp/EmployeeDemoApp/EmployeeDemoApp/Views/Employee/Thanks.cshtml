@@ -1,0 +1,18 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "Thanks";
+}
+
+<h2>Thanks</h2>
+
+<h4>Here is a the summary of the record added.</h4>
+
+<h5>ID: @Model.ID </h5>
+<h5>Surname: @Model.Surname </h5>
+<h5>Dept: @Model.Department </h5>
+<h5>Salary: @Model.Salary </h5>
+<h5>Age: @Model.Age </h5>
+<h5>Sex: @Model.Sex </h5>
+
+<a asp-action="Index">View All Employees</a> <br />
+<a asp-controller="Home" asp-action="Index">Home</a>
