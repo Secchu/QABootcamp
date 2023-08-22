@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %} New Script Writer Details {% endblock %}
+{% block script %}
+<script type="text/javascript" src="{{ url_for('static', filename='delete.js') }}"></script>
+{% endblock %}
+{% block content %} 
+
+	<div class="search-container">
+		<form method="post" action="{{ url_for('writers.search') }}">
+			<input id="text" type="text" placeholder="Search for Writer.." name="keyword">
+			<button class="w3-button w3-black" type="submit">Search</button>
+		</form>
+	</div>
+
+<h1> Script Writers {{ writer.Writer_Name  }} </h1>
+
+  {% set messages = get_flashed_messages() %}
+  {% if messages %}
+	<div class="w3-panel w3-pale-green w3-border">
+				{% for message in messages %}
+					<h3> {{ message }} </h3>
+				{% endfor %}
+	</div>	
+  {% endif %}
+
+	<span id="delete">
+		<div class="w3-container w3-light-grey w3-teal w3-border w3-padding-32">
+				<h3> Writer ID: {{ writer.Writer_ID }} </h1>
+		
+				<h3> Writer's Name: {{ writer.Writer_Name }} </h3>
+				
+				<p> <a href="{{ url_for('writers.editwriter', Id=writer.Writer_ID) }}"> Edit Scriptwriter </a> </p>
+				
+				{% set count = namespace(value=0) %}
+				
+				<div class="w3-panel w3-padding-32 w3-pale-green w3-teal w3-border">
+					<h4 class="header"> Movies written by {{ writer.Writer_Name }}</h4>
+						{% if writer.movie|length == 0 %}
+							<p>Currently there are no movies written by  {{ writer.Writer_Name }} </p>
+						{% else %}
+							<ul class="w3-ul">
+								<table class="tabledata">
+									{% for _movie in writer.movie %}
+									{% set count.value = count.value + 1 %}
+									{% set rowid = 'row' + count.value|string %}
+									<tr id="{{ rowid }}">
+											<td><li><a href="{{ url_for('movies.movieDetails',Id=_movie.Movie_ID) }}">
+												{{ _movie.Movie_Title }}</a></li></td>
+											<td><a class="alink" href="{{ url_for('movies.editMovie',Id=_movie.Movie_ID) }}">
+											Edit Movie {{ _movie.Movie_Title }} </a></td>
+											<td><a class="alink" href="#"
+											onclick="deleteAndHideRow('{{ rowid }}',
+										'{{ url_for('writers.removeMovie',Id=writer.Writer_ID, movieId=_movie.Movie_ID) }}'
+										,'{{ writer.Writer_Name }}','{{ _movie.Movie_Title }}')">
+											Remove Movie {{ _movie.Movie_Title }} from list</a></td>
+										</tr>
+									{% endfor %}
+								</table>
+							</ul>
+						{% endif %}
+						
+						<p><a class="alink" href="{{ url_for('writers.addMovie', Id=writer.Writer_ID) }}">
+						Add Movies for {{ writer.Writer_Name }}</a></p>
+				</div>
+		</div>
+
+ <ul class="breadcrumb">
+  <li><a href="{{ url_for('writers.index', page=1) }}">Writers List</a></li>
+  <li><a href="{{ url_for('writers.editwriter', Id=writer.Writer_ID) }}"> 
+  Edit {{ writer.Writer_Name }} </a></li>
+    <li><a href="#" onclick="deleteEntity('delete','{{ url_for('writers.delete',Id=writer.Writer_ID) }}','{{ writer.Writer_Name }}')"> 
+  Delete {{ writer.Writer_Name }} </a></li>
+</ul> 
+</span>
+{% endblock %}

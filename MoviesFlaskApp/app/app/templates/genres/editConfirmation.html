@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %} Edit Genre Category {{ genre.Category_Name }} {% endblock %}
+{% block script %}
+	<script type="text/javascript" src="{{ url_for('static', filename='delete.js') }}"></script>
+{% endblock %}
+{% block content %} 
+<h1>Edit Genre Category {{ genre.Category_Name }} </h1>
+
+<span id="delete">
+<div class="w3-panel w3-pale-green">
+  <h3> Genre with {{ genre.Category_ID }} has successfully edited. </h3>
+ 
+  <p> Category ID: {{ genre.Category_ID }} </p>
+  
+  <p> Category Name: {{ genre.Category_Name }} </p>
+  
+</div>
+
+<p><a class="alink" href="{{ url_for('genres.editGenre', Id=genre.Category_ID) }}">
+Edit Category {{ genre.Category_Name }} </a></p>
+<p><a class="alink" href="#" onclick="deleteEntity('delete','{{ url_for('genres.delete',Id=genre.Category_ID) }}','{{ genre.Category_ID }}')">
+	Delete Genre {{ genre.Category_Name }}</a></p>
+<p><a class="alink" href="{{ url_for('genres.create') }}">Add New Genre Category </a></p>
+<p><a class="alink" href="{{ url_for('genres.index') }}"> Genre List </a></p>
+</span>
+{% endblock %}

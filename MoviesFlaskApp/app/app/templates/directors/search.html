@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %} Director Keyword Search {% endblock %}
+{% block script %}
+<script type="text/javascript" src="{{ url_for('static', filename='delete.js') }}"></script>
+{% endblock %} 
+{% block content %} 
+
+ <ul class="breadcrumb">
+	<div class="search-container">
+		<form method="post" action="{{ url_for('directors.search') }}">
+			<input id="text" type="text" placeholder="Search.." name="keyword">
+			<button class="w3-button w3-black" type="submit">Search</button>
+		</form>
+	</div>
+</ul> 
+
+<h1>Search Results for Keyword: {{ keyword }} in Director's Name</h1>
+
+	{% set nItems = directors|length %}
+	
+	{% if nItems == 0 %}
+		<div class="w3-panel w3-pale-red w3-border">
+			<h3> Keyword Search Results for Keyword: {{ keyword }} in Director Name </h3>
+			<p> Unfortunately your search returned 0 results. </p>
+		</div>
+	{% else %}
+		<div class="w3-panel w3-pale-green w3-border">
+			<h3> Keyword Search Results for Keyword: {{ keyword }} in Director Name </h3>
+			<p> Your search returned {{ nItems }} results. </p>
+		</div>
+		
+		{% set count = namespace(value=0) %}
+		{% set directorcount = namespace(value=0) %}
+		
+		{% for director in directors %}
+			<div class="w3-container w3-light-grey w3-teal w3-border w3-padding-32">
+			
+				{% set directorcount.value = directorcount.value + 1 %}
+				{% set directorid = "director" + directorcount.value|string %}
+				
+			<span id="{{ directorid }}">
+			
+				<h3> Director Name: {{ director.Director_Name }} </h3>
+				
+				<p> ID: {{ director.Movie_ID }} </p>
+									
+				<p> <a class="alink" href="{{ url_for('directors.editDirector', Id=director.Director_ID) }}"> Edit Director </a> </p>
+				
+				<p><a class="alink" href="#" 
+				onclick="deleteEntity('{{ directorid }}','{{ url_for('directors.delete',Id=director.Director_ID) }}','{{ director.Director_Name }}')">
+				Delete Director</a></p>
+				
+				<div class="w3-panel w3-padding-32 w3-pale-green w3-teal w3-border">
+					<h4 class="header">Movies Directed by {{ director.Director_Name }} </h4>
+					
+					{% if director.movie|length == 0 %}
+						<p> There are no movies currently directed by {{ director.Director_Name }} </p>
+					{% else %}
+						<ul = class="w3-ul">
+							<table class="tabledata">
+								{% for _movie in director.movie %}
+									{% set count.value = count.value + 1 %}
+									{% set rowid = 'row' + count.value|string %}
+									<tr id="{{ rowid }}">
+										<td><li><a href="{{ url_for('movies.movieDetails',Id=_movie.Movie_ID) }}">
+											{{ _movie.Movie_Title }} </a></li></td>
+											
+										<td><a class="alink" href="{{ url_for('movies.editMovie',Id=_movie.Movie_ID) }}">
+										Edit Movie {{ _movie.Movie_Title }} </a></td>
+										
+										<td><a class="alink" href="#"
+										onclick="deleteAndHideRow('{{ rowid }}',
+										'{{ url_for('directors.removeMovie',Id=director.Director_ID, movieId=_movie.Movie_ID) }}'
+										,'{{ director.Director_Name }}','{{ _movie.Movie_Title }}')">
+										Remove Movie {{ _movie.Movie_Title }} from list </a></td>
+										
+									</tr>
+								{% endfor %}
+							</table>
+						</ul>
+					{% endif %}
+					
+					<p><a href="{{ url_for('directors.addMovie', Id=director.Director_ID) }}">
+					Add Movies for Director {{ director.Director_Name }} </a></p>
+					
+				</div>
+			  </span>
+			</div>
+		{% endfor %}
+		
+	{% endif %}
+
+{% endblock %}

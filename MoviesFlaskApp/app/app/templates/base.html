@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{% block title %}{% endblock %} </title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ url_for('static', filename='common.css') }}">
+<link rel="stylesheet"  href="{{ url_for('static', filename='style.css') }}">
+{% block script %}{% endblock %} 
+</head>
+<body>
+	<div class="navbar">
+				<a href="{{ url_for('main.about') }}">About</a>
+				<a href="{{ url_for('directors.index') }}">Directors</a>
+				<a href="{{ url_for('writers.index') }}">Script Writers</a>
+				<a href="{{ url_for('moviestars.index') }}">Movie Stars</a>
+		<div class="dropdown">
+				<button class="dropbtn"> Movies
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+					<a href="{{ url_for('movies.index') }}">All</a>
+					
+					{% for _genre in genres %}
+						<a href="{{ url_for('movies.genres', category=_genre.Category_Name) }} "> 
+							{{ _genre.Category_Name }}
+						</a>
+					{% endfor %}					
+				</div>
+		</div>
+		<div class="dropdown">
+				<button class="dropbtn"> Movies by Year
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+					{% for year in range(2023, 1969, -1) %}
+						<a href="{{ url_for('movies.movie_by_year', year=year, page=1, order='') }}"> {{ year }} </a>
+					{% endfor %}
+				</div>
+		</div>
+		<div class="dropdown">
+				<button class="dropbtn"> Genre Settings
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+					<a href="{{ url_for('genres.index') }}">Genre List</a>
+					<a href="{{ url_for('genres.create') }}">Add Genre</a>
+				</div>
+		</div>
+	</div>
+
+    <div class="w3-container">
+	
+	{% block content %}{% endblock %} 
+	
+        <div class="footer" style="width:100;">
+            <p><i>Sec Duong Chu</i></p>
+            <p><i>First Class Bsc Computer Science Graduate, CCNA, CCNP Enterprise</i></p>
+            <p><i>duongchu@hotmail.com</i></p>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %} Add New Movie {% endblock %}
+{% block content %} 
+
+  <div class="search-container">
+    <form method="post" action="{{ url_for('movies.search') }}">
+      <input id="text" type="text" placeholder="Search for movie title.." name="keyword">
+      <button class="w3-button w3-black" type="submit">Search</button>
+    </form>
+  </div>
+
+<h1> New Movie </h1>
+
+  {% set messages = get_flashed_messages() %}
+  {% if messages %}
+	<div class="w3-panel w3-pale-yellow w3-border">
+		<h3> Please correct the following errors </h3>
+			<ol class="w3-ul">
+				{% for message in messages %}
+					<li> {{ message }} </li>
+				{% endfor %}
+			</ol>
+	</div>	
+  {% endif %}
+
+<form method="post" class="w3-container">
+	<label for="id"><b>ID</b></label>
+	<input type="number" placeholder="Please enter the primary key" name="id" min="1" required>
+    <label for="title"><b>Title</b></label>
+    <input type="text" placeholder="Please enter movie title" name="title" required>
+
+    <label for="duration"><b>Duration</b></label>
+    <input type="number" placeholder="Duration in minutes" name="duration" min="1" value="90" required>
+
+    <label for="year"><b>Please select your year</b></label>
+     <select id="yr" class="w3-select w3-border" name="year" required>
+		<option value="" disabled selected>Choose your year</option>
+			{% for year in range(2023, 1969, -1) %}
+				<option value="{{ year }}"> {{ year }}</option>
+			{% endfor %}
+	</select> 
+
+    <p><button class="w3-button w3-black" type="submit">Add Movie</button></p>
+</form>
+
+{% endblock %}

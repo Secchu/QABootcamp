@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %} Movie Review for {{ movie.Movie_Title }} {% endblock %}
+{% block content %} 
+
+  <div class="search-container">
+    <form method="post" action="{{ url_for('movies.search') }}">
+      <input id="text" type="text" placeholder="Search for movie title.." name="keyword">
+      <button class="w3-button w3-black" type="submit">Search</button>
+    </form>
+  </div>
+
+<h1> Movie Review for {{ movie.Movie_Title }} with ID {{ movie.Movie_ID }} </h1>
+
+  {% set messages = get_flashed_messages() %}
+  {% if messages %}
+	<div class="w3-panel w3-pale-yellow w3-border">
+		<h3> Please correct the following errors </h3>
+			<ol class="w3-ul">
+				{% for message in messages %}
+					<li> {{ message }} </li>
+				{% endfor %}
+			</ol>
+	</div>	
+  {% endif %}
+
+<form id="review" method="post" class="w3-container">
+	<label for="movieid"><b>Movie ID: {{ movie.Movie_ID }} </b></label>
+	<input type="number" name="movieid" value="{{ movie.Movie_ID }}" disabled>
+	<label for="reviewid"><b>Review ID: for Movie ID {{ movie.Movie_ID }} </b></label>
+	<input type="number" name="reviewid" placeholder="Please enter your Review ID" min="1" required>
+    <label for="name"><b>Name</b></label>
+    <input type="text" placeholder="Please enter your name" name="name" required>
+	<label for="city"><b>City</b></label>
+    <input type="text" placeholder="Please enter your city" name="city" required>
+	<label for="rating"><b>Rating out of 10</b></label>
+	<input type="number" placeholder="Please enter your rating" name="rating" 
+	min="1" max="10" step="0.01" required>
+	<label for="rating"><b>Review</b></label>
+	<textarea style="width:100%; height: 200px;" name="review" form="review" required>Enter your review here...</textarea>
+	<p><button class="w3-button w3-black" type="submit">Add Review</button></p>
+</form>
+
+{% endblock %}

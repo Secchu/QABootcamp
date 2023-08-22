@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %} Movie Review for {{ movie.Movie_Title }} {% endblock %}
+{% block content %} 
+
+  <div class="search-container">
+    <form method="post" action="{{ url_for('movies.search') }}">
+      <input id="text" type="text" placeholder="Search for movie title.." name="keyword">
+      <button class="w3-button w3-black" type="submit">Search</button>
+    </form>
+  </div>
+
+<div class="w3-panel w3-pale-green w3-padding-32">
+  <h3>Success!</h3>
+  <p> {{ msg }} </p>
+</div>  
+<div class="w3-container w3-light-grey w3-teal w3-border w3-padding-32">
+	<h4>Movie Review for {{ movie.Movie_Title }} for Movie ID {{ movie.Movie_ID }} </h4>
+
+	<p>Reviewer ID: {{ review.Reviewer_ID }} </p>
+	
+	<p>Reviewer Name: {{ review.Reviewer_Name }} </p>
+	
+	<p>City: {{ review.City }} </p>
+	<div class="w3-panel w3-padding-32 w3-pale-green w3-teal w3-border">
+		<h5 class="review">Review </h5>
+		<p> {{ review.Review }} </p>
+	</div>
+	
+	<p><a href="{{ url_for('reviews.editReview', reviewId=review.Reviewer_ID) }}">Edit Review</a></p>
+	
+	<p><a href="{{ url_for('movies.movieDetails', Id=movie.Movie_ID) }}">{{ movie.Movie_Title }} </p>
+</div>
+
+{% endblock %}

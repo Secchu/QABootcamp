@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} New Genre Category {% endblock %}
+{% block content %} 
+
+<h1>New Genre Category</h1>
+
+{% set messages = get_flashed_messages() %}
+  {% if messages %}
+	<div class="w3-panel w3-pale-yellow w3-border">
+		<h3> Please correct the following errors </h3>
+			<ol class="w3-ul">
+				{% for message in messages %}
+					<li> {{ message }} </li>
+				{% endfor %}
+			</ol>
+	</div>	
+  {% endif %}
+
+<form method="post" class="w3-container">
+	<label for="id"><b>ID</b></label>
+	<input type="number" placeholder="Please enter the primary key" name="id" min="1" required>
+	<label for="category"><b>Category</b></label>
+    <input type="text" placeholder="Please enter category name" name="category" required>
+	<p><button class="w3-button w3-black" type="submit">Add Genre</button></p>
+</form>
+
+{% endblock %}

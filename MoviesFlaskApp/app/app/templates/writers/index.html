@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %} Script Writers {% endblock %}
+{% block script %}
+<script type="text/javascript" src="{{ url_for('static', filename='delete.js') }}"></script>
+{% endblock %} 
+{% block content %} 
+ <ul class="breadcrumb">
+	<li><a href="{{ url_for('writers.index', page=1, order='name') }}">Order by Name</a></li>
+	<li><a href="{{ url_for('writers.create') }}">Add Scriptwriter</a></li>
+	
+	<div class="search-container">
+		<form method="post" action="{{ url_for('writers.search') }}">
+			<input id="text" type="text" placeholder="Search for Writer.." name="keyword">
+			<button class="w3-button w3-black" type="submit">Search</button>
+		</form>
+	</div>
+</ul> 
+
+<h1> {{ title }} </h1>
+
+	{% if nItems == 0 %}
+		<div class="w3-panel w3-pale-red w3-border">
+			<h3> There are currently no Scriptwriters </h3>
+			<p> ><a href="{{ url_for('writers.create') }}">Add New Scriptwriter to Database </a></p>
+		</div>
+	{% endif %}
+
+	{% set count = namespace(value=0) %}
+	{% set writercount = namespace(value=0) %}
+	
+	{% for writer in pagination.items %}
+		<div class="w3-container w3-light-grey w3-teal w3-border w3-padding-32">
+
+				{% set writercount.value = writercount.value + 1 %}
+				{% set writerid = "writer" + writercount.value|string %}
+				
+			<span id="{{ writerid }}">
+			
+				<h3>  {{ writer.Writer_Name }} </h3>
+				
+				<p> ID: {{ writer.Writer_ID }} </p>
+				
+				<p> <a class="alink" href="{{ url_for('writers.editwriter', Id=writer.Writer_ID) }}"> Edit Scriptwriter </a> </p>
+				
+				<p><a class="alink" href="#" 
+				onclick="deleteEntity('{{ writerid }}','{{ url_for('writers.delete',Id=writer.Writer_ID) }}','{{ writer.Writer_Name }}')">
+				Delete Writer {{ writer.Writer_Name }}</a> </p>
+				
+				<div class="w3-panel w3-padding-32 w3-pale-green w3-teal w3-border">
+					<h4 class="header"> Movies written by {{ writer.Writer_Name }}</h4>
+						{% if writer.movie|length == 0 %}
+							<p>Currently there are no movies written by  {{ writer.Writer_Name }} </p>
+						{% else %}
+							<ul class="w3-ul">
+								<table class="tabledata">
+									{% for _movie in writer.movie %}
+									{% set count.value = count.value + 1 %}
+									{% set rowid = 'row' + count.value|string %}
+									<tr id="{{ rowid }}">
+											<td><li><a href="{{ url_for('movies.movieDetails',Id=_movie.Movie_ID) }}">
+											{{ _movie.Movie_Title }}</a></li></td>
+											
+											<td><a class="alink" href="{{ url_for('movies.editMovie',Id=_movie.Movie_ID) }}">
+											Edit Movie {{ _movie.Movie_Title }} </a></td>
+											
+											<td><a class="alink" href="#"
+											onclick="deleteAndHideRow('{{ rowid }}',
+										'{{ url_for('writers.removeMovie',Id=writer.Writer_ID, movieId=_movie.Movie_ID) }}'
+										,'{{ writer.Writer_Name }}','{{ _movie.Movie_Title }}')">
+											Remove Movie {{ _movie.Movie_Title }} from list</a></td>
+										</tr>
+									{% endfor %}
+								</table>
+							</ul>
+						{% endif %}
+						
+						<p><a class="alink" href="{{ url_for('writers.addMovie', Id=writer.Writer_ID) }}">
+						Add Movies for {{ writer.Writer_Name }}</a></p>
+				</div>
+			</span>
+		</div>
+	{% endfor %}
+
+	<div class="w3-light-grey w3-padding-32" style="text-align: center;">
+		<h5> {{ pagination.first }} - {{ pagination.last }} of {{ pagination.total }}</h5>
+		<h5> Page {{ pagination.page }} of {{ pagination.pages }} </h5>
+	<div>
+
+	<div class="pagination w3-panel w3-padding-32">
+	
+		{% if pagination.has_prev %}
+			<a href="{{ url_for('writers.index', page=pagination.prev_num, title=title, order=order) }}">&laquo;</a>
+		{% endif %}
+		
+		{% for number in range(1, pagination.pages + 1) %}
+			{% if pagination.page != number %}
+				<a href="{{ url_for('writers.index', page=number, order=order) }}">{{ number }} </a>
+			{% else %}
+				<a href="#" class="active">{{ number }}</a>
+			{% endif %}
+			
+		{% endfor %}
+		
+		{% if pagination.has_next %}
+			<a href="{{ url_for('writers.index', page=pagination.next_num, order=order) }}">&raquo;</a>
+		{% endif %}
+	</div>
+
+{% endblock %}

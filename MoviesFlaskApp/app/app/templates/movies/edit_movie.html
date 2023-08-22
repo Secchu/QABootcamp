@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %} Editing Movie: {{ movie.Movie_Title }} {% endblock %}
+{% block script %}
+	<script type="text/javascript" src="{{ url_for('static', filename='delete.js') }}"></script>
+
+    <script type="text/javascript">
+
+        window.onload = function() {
+
+          //Get a reference to the link on the page
+          // with an id of "mylink"
+          var a = document.getElementById("cancel");
+		  
+          a.onclick = function() {
+		  
+			var title = document.getElementById("title")
+			title.innerHTML = "{{ movie.Movie_Title }}"
+			title.value = "{{ movie.Movie_Title }}"
+			
+			var duration = document.getElementById("duration")
+			duration.innerHTML = "{{ movie.Duration }}"
+			duration.value = "{{ movie.Duration }}"
+			
+			var year = document.getElementById("year")
+			year.text = '{{ movie.Year }}'
+			year.value = '{{ movie.Year }}'
+			
+			alert("The movie {{ movie.Movie_Title }} have been reset to their original values")
+          }
+        }
+    </script>
+{% endblock %}
+{% block content %} 
+
+  <div class="search-container">
+    <form method="post" action="{{ url_for('movies.search') }}">
+      <input id="text" type="text" placeholder="Search for movie title.." name="keyword">
+      <button class="w3-button w3-black" type="submit">Search</button>
+    </form>
+  </div>
+
+<h1> Editing Movie: {{ movie.Movie_Title }} </h1>
+
+  {% set messages = get_flashed_messages() %}
+  {% if messages %}
+	<div class="w3-panel w3-pale-yellow w3-border">
+		<h3> Please correct the following errors </h3>
+			<ol class="w3-ul">
+				{% for message in messages %}
+					<li> {{ message }} </li>
+				{% endfor %}
+			</ol>
+	</div>	
+  {% endif %}
+
+<span id="delete">
+<form method="post" class="w3-container">
+	<label for="id"><b>ID</b></label>
+	<input type="number" value="{{ movie.Movie_ID }}" name="id" disabled required>
+    <label for="title"><b>Title</b></label>
+    <input id="title" type="text" value="{{ movie.Movie_Title }}" name="title" required>
+
+    <label for="duration"><b>Duration</b></label>
+    <input id="duration" type="number" value="{{ movie.Duration }}" name="duration" min="1" value="90" required>
+
+    <label for="year"><b>Year</b></label>
+     <select id="year" value="{{ movie.Year }}" class="w3-select w3-border" name="year" required>
+		<option value="{{ movie.Year }}"> {{ movie.Year }} </option>
+			{% for year in range(2023, 1969, -1) %}
+				<option value="{{ year }}"> {{ year }}</option>
+			{% endfor %}
+	</select> 
+
+    <p><button class="w3-button w3-black" onclick="return confirm('You are about to edit movie with ID {{ movie.Movie_ID }}')" 
+	type="submit">Save</button> <a id="cancel" class="bttn w3-button w3-black">Reset</a></p>
+</form>
+
+<p><a class="alink" href="#" onclick="deleteEntity('delete','{{ url_for('movies.delete',Id=movie.Movie_ID) }}','{{ movie.Movie_Title }}')">
+	Delete Movie</a> 
+<a class="alink" href="{{ url_for('movies.index', page=1, order='title') }}">All Movies</a></p>
+</span>
+{% endblock %}

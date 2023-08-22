@@ -1,0 +1,299 @@
+{% extends "base.html" %}
+{% block title %} Movies List {% endblock %}
+{% block script %}
+<script type="text/javascript" src="{{ url_for('static', filename='delete.js') }}"></script>
+{% endblock %} 
+{% block content %} 
+
+ <ul class="breadcrumb">
+	{% if category == "year" %}
+		<li><a href="{{ url_for('movies.movie_by_year', year=year, page=1, order='title') }}">
+		Order by Title</a></li>
+		<li><a href="{{ url_for('movies.movie_by_year', year=year, page=1, order='duration') }}">
+		Order by Duration</a></li>
+	{% elif category == "" %}
+	
+		<li><a href="{{ url_for('movies.index', page=1, order='title') }}">
+		Order by Title</a></li>
+		<li><a href="{{ url_for('movies.index', page=1, order='year') }}">
+		Order by Year</a></li>
+		<li><a href="{{ url_for('movies.index', page=1, order='duration') }}">
+		Order by Duration</a></li>
+	{% else %}
+		<li><a href="{{ url_for('movies.genres', category=category, page=1, order='title') }}">
+		Order by Title</a></li>
+		<li><a href="{{ url_for('movies.genres', category=category, page=1, order='year') }}">
+		Order by Year</a></li>
+		<li><a href="{{ url_for('movies.genres', category=category, page=1, order='duration') }}">
+		Order by Duration</a></li>
+	{% endif %}
+  <li><a href="{{ url_for('movies.create') }}">Add Movie</a></li>
+  <div class="search-container">
+    <form method="post" action="{{ url_for('movies.search') }}">
+      <input id="text" type="text" placeholder="Search for Movie title.." name="keyword">
+      <button class="w3-button w3-black" type="submit">Search</button>
+    </form>
+  </div>
+</ul>
+
+
+<h1> {{ title }} </h1>
+	
+	{% set nItems = pagination.items|length %}
+	
+	{% if nItems == 0 %}
+		<div class="w3-panel w3-pale-red w3-border">
+			<h3> There are currently no Movies </h3>
+			<p><a class="alink" href="{{ url_for('movies.create') }}">Add New Movie to Database </a></p>
+		</div>
+	{% endif %}
+	
+	{% set count = namespace(value=0) %}
+	{% set moviecount = namespace(value=0) %}
+	
+	{% for movie in pagination.items %}
+		<div class="w3-container w3-light-grey w3-teal w3-border w3-padding-32">
+				
+				{% set moviecount.value = moviecount.value + 1 %}
+				{% set movieid = "Movie" + moviecount.value|string %}
+			<span id="{{ movieid }}">
+				<h3> Movie Title: {{ movie.Movie_Title }} </h3>
+				
+				<p> ID: {{ movie.Movie_ID }} </p>
+				
+				<p> Duration: {{ movie.Duration }} </p>
+				
+				<p> Release Year: {{ movie.Year }} </p>
+				
+				<p> <a class="alink" href="{{ url_for('movies.editMovie', Id=movie.Movie_ID) }}"> 
+				Edit Movie </a> </p>
+				
+				<p><a href="#" class="alink" 
+				onclick="deleteEntity('{{ movieid }}','{{ url_for('movies.delete',Id=movie.Movie_ID) }}','{{ movie.Movie_Title }}')">
+				Delete {{ movie.Movie_Title }}</a></p>
+				
+				<h4 class="header">Genre</h4>
+				
+				{% if movie.categories|length == 0 %}
+					<p>This movie does not belong to any genre</p>
+				{% endif %}
+
+				<table class="tabledata">
+					{% for genre in movie.categories %}
+						{% set count.value = count.value + 1 %}
+						{% set rowid = 'row' + count.value|string %}
+						<tr id="{{ rowid }}">
+							<td><p><a href="{{ url_for('movies.genres', category=genre.Category_Name, page=1, order=None) }}">
+							{{ genre.Category_Name }}</a></p></td>
+							
+							<td><a class="alink" href="{{ url_for('genres.editGenre',Id=genre.Category_ID) }}">
+							Edit Genre {{ genre.Category_Name }}</a></td>
+							
+							<td><a class="alink" 
+	                         onclick="deleteAndHideRow('{{ rowid }}',
+							 '{{ url_for('movies.removeGenre',Id=movie.Movie_ID, genreId=genre.Category_ID) }}'
+							 ,'{{ genre.Category_Name }}','{{ movie.Movie_Title }}')"
+							href="#">Remove Genre {{ genre.Category_Name }} from list</a></td>
+							
+						<tr>
+					{% endfor %}
+				</table>
+				
+				<p><a class="alink" href="{{ url_for('movies.addGenre', movieId=movie.Movie_ID) }}">
+				Add Genre</a></p>
+				
+				<h4 class="header">Cast</h4>
+				
+				{% if movie.cast|length == 0 %}
+					<p>This movie does not have any cast </p>
+				{% endif %}
+				
+				<table class="tabledata">
+					{% for star in movie.cast %}
+						{% set count.value = count.value + 1 %}
+						{% set rowid = 'row' + count.value|string %}
+						<tr id="{{ rowid }}">
+							<td>
+								<p><a href="{{ url_for('moviestars.moviestarDetails', Id=star.Star_ID) }}">
+								{{ star.Star_Name }}</a></p>
+							</td>
+							<td><a class="alink" href="{{ url_for('moviestars.editMoviestar',Id=star.Star_ID) }}">
+							Edit Moviestar {{ star.Star_Name }} </a></td>
+							<td><a class="alink" href="#"
+							onclick="deleteAndHideRow('{{ rowid }}',
+							 '{{ url_for('movies.removeCast',Id=movie.Movie_ID, starId=star.Star_ID) }}'
+							 ,'{{ star.Star_Name }}','{{ movie.Movie_Title }}')">
+							Remove Moviestar {{ star.Star_Name }} from list</a></td>
+						</tr>
+					{% endfor %}
+				</table>
+
+				<p><a class="alink" href="{{ url_for('movies.addCast', movieId=movie.Movie_ID) }}">
+				Add Cast</a></p>
+				
+				<h4 class="header">Directors</h4>
+				
+				{% if movie.directed_movies|length == 0 %}
+					<p>This movie does not have any Directors. </p>
+				{% endif %}
+				
+				<table class="tabledata">
+					{% for _director in movie.directed_movies %}
+						{% set count.value = count.value + 1 %}
+						{% set rowid = 'row' + count.value|string %}
+						<tr id="{{ rowid }}">
+							<td><p><a href="{{ url_for('directors.directorDetails', Id=_director.Director_ID) }}">
+								{{ _director.Director_Name }} </a></p>
+							</td>
+							<td><a class="alink" href="{{ url_for('directors.editDirector',Id=_director.Director_ID) }}">
+							Edit Director {{ _director.Director_Name }}</a></td>
+							<td><a class="alink" href="#"
+							onclick="deleteAndHideRow('{{ rowid }}',
+							 '{{ url_for('movies.removeDirector',Id=movie.Movie_ID, directorId=_director.Director_ID) }}'
+							 ,'{{ _director.Director_Name }}','{{ movie.Movie_Title }}')">
+							Remove Director {{ _director.Director_Name }} from list</a></td>
+						<tr>
+					{% endfor %}
+				</table>
+				
+				<p><a class="alink" href="{{ url_for('movies.addDiretor', movieId=movie.Movie_ID) }}">
+				Add Director</a></p>
+				
+				<h4 class="header">Movie Writers</h4>
+				
+				{% if movie.moviescripts|length == 0 %}
+					<p>This movie does not have any writers </p>
+				{% endif %}
+				
+			`	<table class="tabledata">
+					{% for _writer in movie.moviescripts %}
+						{% set count.value = count.value + 1 %}
+						{% set rowid = 'row' + count.value|string %}
+						<tr id="{{ rowid }}">
+							<td><p><a href="{{ url_for('writers.writerDetails', Id=_writer.Writer_ID) }}">
+							{{ _writer.Writer_Name }} </a></p></td>
+							
+							<td><a class="alink" href="{{ url_for('writers.editwriter',Id=_writer.Writer_ID) }}">
+							Edit Writer {{_writer.Writer_Name }}</a></td>
+							
+							<td><a class="alink" href="#"
+							onclick="deleteAndHideRow('{{ rowid }}',
+							 '{{ url_for('movies.removeWriter',Id=movie.Movie_ID, writerId=_writer.Writer_ID) }}'
+							 ,'{{ _writer.Writer_Name }}','{{ movie.Movie_Title }}')">
+							Remove Writer {{_writer.Writer_Name }} from list</a></td>
+						</tr>
+					{% endfor %}
+				</table>
+				
+				<p><a class="alink" href="{{ url_for('movies.addWriter', movieId=movie.Movie_ID) }}">
+				Add Writer</a></p>
+				
+				<h4 class="header">Review for {{ movie.Movie_Title }} </h4>
+				{% if movie.movie_rating|length == 0 %}
+					<p>This movie does not have any Reviews </p>
+				{% endif %}
+				
+				{% for review in movie.movie_rating %}
+					{% set count.value = count.value + 1 %}
+					{% set rowid = 'row' + count.value|string %}
+					<span id="{{ rowid }}">	
+					<h5 class="review">{{ review.Reviewer_Name }} from {{ review.City }} 
+					rated {{ movie.Movie_Title }} {{ review.Rating }} </h5>
+					
+					<div class="w3-panel w3-padding-32 w3-pale-green w3-teal w3-border">
+							<p> {{ review.Review }} </p>
+					</div>
+					
+					<p><a class="alink" href="{{ url_for('reviews.editReview', reviewId=review.Reviewer_ID) }}">Edit Review</a></p>
+					
+					{% set reviewid = "Review by " + review.Reviewer_Name %}
+					
+					<p><a class="alink" href="#"
+					   onclick="deleteEntity('{{ rowid }}','{{ url_for('reviews.delete', Id=review.Reviewer_ID) }}',
+					   '{{ reviewid }}')">Delete Review</a></p>
+					</span>
+				{% endfor %}
+				
+				<br>
+				<p><a class="alink" href="{{ url_for('reviews.addReview', MovieId=movie.Movie_ID) }}">Add Review</a></p>
+			</span>
+		</div>
+	{% endfor %}
+
+	<!-- Very important to to create the correct HTML links as we are using the same template for filtered queries based on year and
+         genre	!-->
+
+	<div class="w3-light-grey w3-padding-32" style="text-align: center;">
+		<h5> {{ pagination.first }} - {{ pagination.last }} of {{ pagination.total }}</h5>
+		<h5> Page {{ pagination.page }} of {{ pagination.pages }} </h5>
+	<div>
+
+	<div class="pagination w3-panel w3-padding-32">
+	
+		{% if pagination.has_prev %}
+			{% if category == "year" %}
+			
+				<a href="{{ url_for('movies.movie_by_year', year=year, page=pagination.prev_num, order=order) }}">
+				&laquo;</a>
+				
+			{% elif category == "" %}
+			
+				<a href="{{ url_for('movies.index', page=pagination.prev_num, title=title, order=order) }}">
+				&laquo;</a>
+			
+			{% else %}
+			
+				<a href="{{ url_for('movies.genres', category=category, page=pagination.prev_num, order=order) }}">
+				&laquo;</a>
+				
+			{% endif %}
+		{% endif %}
+				
+		{% for number in range(1, pagination.pages + 1) %}
+			{% if pagination.page != number %}
+				{% if category == "year" %}
+				
+					<a href="{{ url_for('movies.movie_by_year', year=year, page=number, order=order) }}">
+					{{ number }} </a>
+					
+				{% elif category == "" %}
+					
+					<a href="{{ url_for('movies.index', page=number, order=order) }}">
+					{{ number }} </a>
+					
+				{% else %}
+				
+					<a href="{{ url_for('movies.genres', category=category, page=number, order=order) }}">
+					{{ number }} </a>
+					
+				{% endif %}
+			{% else %}
+			
+				<a href="{{ url_for('movies.index', page=number, order=order) }}" class="active">
+				{{ number }}</a>
+				
+			{% endif %}
+			
+		{% endfor %}
+		
+		{% if pagination.has_next %}
+			{% if category == "year" %}
+			
+				<a href="{{ url_for('movies.movie_by_year', year=year, page=pagination.next_num, order=order) }}">
+				&raquo;</a>
+			
+			{% elif category == "" %}
+			
+				<a href="{{ url_for('movies.index', page=pagination.next_num, order=order) }}">
+				&raquo;</a>
+			
+			{% else %}
+			
+				<a href="{{ url_for('movies.genres', category=category, page=pagination.next_num, order=order) }}">
+				&raquo;</a>
+			
+			{% endif %}
+		{% endif %}
+	</div>
+
+{% endblock %}

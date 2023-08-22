@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %} About Flask Movies App {% endblock %}
+{% block content %} 
+
+<h1> About </h1>
+
+<p>This application was designed by Sec Chu as part of an optional task for the Python Software Development Level 3 Bootcamp Course.
+This application is included as the end of course portfolio.</p>
+
+<p>It is a basic Flask application that has CRUD capabilities. CRUD stands for CREATE READ UPDATE DELETE. These are the four features necessary
+to implement an database application that provides persistent storage. In any basic database application it is necessary that users should be able
+to create, read, update and delete records.</p>
+
+<p>The application uses Flask as the web framework and Flask SQLAlchemy as the object mapper for connecting to the database. While database Administrators
+work with SQL, columns, rows, records, relationships etc Developers work with objects. Having a Object Mapper that convert database records to objects
+allows the Developer to concentrate on the design of the application and coding style without having to worry about too much on the internal structure
+of the database as well as linking of multiple table relationships.</p>
+
+<p>The application uses SQLite however it can easily be modified to use databases such as MySQL or Postgres. This can easily be done by modifying the 
+   <strong>SQLALCHEMY_DATABASE_URI</strong> parameter in the <strong>Config.py</strong> module.</p>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %} Add Confirmation for Director {{ to }} {% endblock %}
+{% block content %}
+
+<div class="w3-panel w3-pale-green">
+  <h3>Success!</h3>
+  <p>The following movies are now directed by {{ to }} </p>
+  
+  <ol class="w3-ul">
+	{% for item in added %}
+		<li>{{ item }}</li>
+	{% endfor %}
+  </ol>
+</div> 
+
+{% endblock %}

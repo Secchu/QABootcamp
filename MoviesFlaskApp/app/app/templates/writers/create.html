@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %} Add Writer {% endblock %}
+{% block content %} 
+
+<h1> New Writer </h1>
+
+  {% set messages = get_flashed_messages() %}
+  {% if messages %}
+	<div class="w3-panel w3-pale-yellow w3-border">
+		<h3> Please correct the following errors </h3>
+			<ol class="w3-ul">
+				{% for message in messages %}
+					<li> {{ message }} </li>
+				{% endfor %}
+			</ol>
+	</div>	
+  {% endif %}
+
+<form method="post" class="w3-container">
+	<label for="id"><b>ID</b></label>
+	<input type="number" placeholder="Please enter the primary key" name="id" min="1" required>
+    <label for="name"><b>Name</b></label>
+    <input type="text" placeholder="Please enter Writers Name" name="name" required>
+
+    <button class="w3-button w3-black" type="submit">Add Writer</button>
+</form>
+
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %} Editing Review {{ review.Reviewer_ID }} for {{ movie.Movie_Title }} {% endblock %}
+{% block script %}
+
+	<script type="text/javascript" src="{{ url_for('static', filename='delete.js') }}"></script>
+    <script type="text/javascript">
+
+        window.onload = function() {
+
+          //Get a reference to the link on the page
+          // with an id of "mylink"
+          var a = document.getElementById("cancel");
+		  
+          a.onclick = function() {
+		  
+			var name = document.getElementById("name")
+			name.value = "{{ review.Reviewer_Name }}"
+			
+			var city = document.getElementById("name")
+			city.value = "{{ review.City }}"
+			
+			var rating = document.getElementById("rating")
+			rating.value = "{{ review.Rating }}"
+			
+			var review = document.getElementById("review")
+			review.value = "{{ review.Review }}"
+			alert("Review have been reset to their original values")
+          }
+        }
+    </script>
+{% endblock %}
+{% block content %}
+
+  <div class="search-container">
+    <form method="post" action="{{ url_for('movies.search') }}">
+      <input id="text" type="text" placeholder="Search for Movie title.." name="keyword">
+      <button class="w3-button w3-black" type="submit">Search</button>
+    </form>
+  </div>
+
+  {% set messages = get_flashed_messages() %}
+  {% if messages %}
+	<div class="w3-panel w3-pale-yellow w3-border">
+		<h3> Please correct the following errors </h3>
+			<ol class="w3-ul">
+				{% for message in messages %}
+					<li> {{ message }} </li>
+				{% endfor %}
+			</ol>
+	</div>	
+  {% endif %}
+
+<!-- When editing the review don't let user change the movie ID and Reviewer ID because this would really complicate our code
+     since there is a relationship between the two involving foreign keys. We can simply disable the controls !-->
+
+<h1>Editing Review with ID {{ review.Reviewer_ID }} for {{ movie.Movie_Title }} </h1>
+
+<span id='delete'>
+<form id="review" method="post" class="w3-container">
+	<label for="movieid"><b>Movie ID: {{ movie.Movie_ID }} </b></label>
+	<input type="number" name="movieid" value="{{ movie.Movie_ID }}" disabled>
+	<label for="reviewid"><b>Review ID: for Movie ID {{ movie.Movie_ID }} </b></label>
+	<input type="number" name="reviewid" value="{{ review.Reviewer_ID }}" min="1" disabled>
+    <label for="name"><b>Name</b></label>
+    <input id="name" type="text" value="{{ review.Reviewer_Name }}" name="name" required>
+	<label for="city"><b>City</b></label>
+    <input id="city" type="text" value="{{ review.City }}" name="city" required>
+	<label for="rating"><b>Rating out of 10</b></label>
+	<input id="rating" type="number" value="{{ review.Rating }}" name="rating" 
+	min="1" max="10" step="0.01" required>
+	<label for="rating"><b>Review</b></label>
+	<textarea id="review" style="width:100%; height: 200px;" name="review" required>{{ review.Review }}</textarea>
+	<p><button class="w3-button w3-black" type="submit" 
+	   onclick="return confirm('You are about to edit review with ID {{ review.Reviewer_ID }}')" >Save</button>
+	   <a id="cancel" class="bttn w3-button w3-black">Reset</a></p>
+	</p>
+</form>
+
+{% set _review = "Review by " + review.Reviewer_Name %}
+
+<p><a class="alink" onclick="deleteEntity('delete','{{ url_for('reviews.delete',Id=review.Reviewer_ID) }}','{{ _review }}')">
+Delete Review </a></p>
+</span>
+{% endblock %} 

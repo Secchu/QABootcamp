@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %} Famous Movie Stars {% endblock %}
+{% block script %}
+<script type="text/javascript" src="{{ url_for('static', filename='delete.js') }}"></script>
+{% endblock %} 
+{% block content %} 
+
+ <ul class="breadcrumb">
+	<li><a href="{{ url_for('moviestars.index', page=1, order='name') }}">Order by Name</a></li>
+	<li><a href="{{ url_for('moviestars.create') }}">Add Moviestar</a></li>
+  
+	<div class="search-container">
+		<form method="post" action="{{ url_for('moviestars.search') }}">
+			<input id="text" type="text" placeholder="Search for Moviestar.." name="keyword">
+			<button class="w3-button w3-black" type="submit">Search</button>
+		</form>
+	</div>  
+</ul> 
+
+<h1> {{ title }} </h1>
+
+	{% if nItems == 0 %}
+		<div class="w3-panel w3-pale-red w3-border">
+			<h3> There are currently no Moviestars </h3>
+			<p><a href="{{ url_for('moviestars.create') }}">Add New Moviestar to Database </a></p>
+		</div>
+	{% endif %}
+	
+	{% set count = namespace(value=0) %}
+	{% set starcount = namespace(value=0) %}
+	
+	{% for star in pagination.items %}
+		<div class="w3-container w3-light-grey w3-teal w3-border w3-padding-32">
+		
+				{% set starcount.value = starcount.value + 1 %}
+				{% set starid = "star" + starcount.value|string %}
+				
+			<span id="{{ starid }}">
+			
+				<h3>  {{ star.Star_Name }} </h3>
+				
+				<p> ID: {{ star.Star_ID }} </p>
+				
+				<p> <a class="alink" href="{{ url_for('moviestars.editMoviestar', Id=star.Star_ID) }}"> 
+				Edit Moviestar {{ star.Star_Name }} </a> </p>
+				
+				<p><a class="alink" href="#" 
+				onclick="deleteEntity('{{ starid }}','{{ url_for('moviestars.delete',Id=star.Star_ID) }}','{{ star.Star_Name }}')">
+				Delete Moviestar {{ star.Star_Name }} </a> </p>
+				
+				<div class="w3-panel w3-padding-32 w3-pale-green w3-teal w3-border">
+					<h4 class="header">Movies Featuring {{ star.Star_Name }} </h4>
+					{% if star.movie|length == 0 %}
+						<p>{{ star.Star_Name }} has not featured in any movies</p>
+					{% else %}
+						<ul class="w3-ul">
+							<table class="tabledata">
+								{% for _movie in star.movie %}
+									{% set count.value = count.value + 1 %}
+									{% set rowid = 'row' + count.value|string %}
+									<tr id="{{ rowid }}">
+										<td><li> <a href="{{ url_for('movies.movieDetails', Id=_movie.Movie_ID) }}"> 
+										{{ _movie.Movie_Title }} </a></li></td>
+										
+										<td><a class="alink" href="{{ url_for('movies.editMovie',Id=_movie.Movie_ID) }}">
+										Edit Movie {{ _movie.Movie_Title }}</a></td>
+										
+										<td><a class="alink" href="#"
+										onclick="deleteAndHideRow('{{ rowid }}',
+										'{{ url_for('moviestars.removeMovie',Id=star.Star_ID, movieId=_movie.Movie_ID) }}'
+										,'{{ star.Star_Name }}','{{ _movie.Movie_Title }}')">
+										Remove Movie {{ _movie.Movie_Title }} from list</a></td>
+									</tr>
+								{% endfor %}
+							</table>
+						</ul>
+					{% endif %}
+					
+					<p><a class="alink" href="{{ url_for('moviestars.addMovie', Id=star.Star_ID) }}">Add Movies for {{ star.Star_Name }} </a></p>
+				</div>
+			</span>
+		</div>
+	{% endfor %}
+
+	<div class="w3-light-grey w3-padding-32" style="text-align: center;">
+		<h5> {{ pagination.first }} - {{ pagination.last }} of {{ pagination.total }}</h5>
+		<h5> Page {{ pagination.page }} of {{ pagination.pages }} </h5>
+	<div>
+
+	<div class="pagination w3-panel w3-padding-32">
+	
+		{% if pagination.has_prev %}
+			<a href="{{ url_for('moviestars.index', page=pagination.prev_num, order=order) }}">&laquo;</a>
+		{% endif %}
+				
+		{% for number in range(1, pagination.pages + 1) %}
+			{% if pagination.page != number %}
+				<a href="{{ url_for('moviestars.index', page=number, order=order) }}">{{ number }} </a>
+			{% else %}
+				<a href="{{ url_for('moviestars.index', page=number, order=order) }}" class="active">{{ number }}</a>
+			{% endif %}
+			
+		{% endfor %}
+		
+		{% if pagination.has_next %}
+			<a href="{{ url_for('moviestars.index', page=pagination.next_num, order=order) }}">&raquo;</a>
+		{% endif %}
+	</div>
+
+{% endblock %}

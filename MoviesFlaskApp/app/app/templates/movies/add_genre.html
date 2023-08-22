@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %} Add Genre for {{ movie.Movie_Title }} with Movie ID: {{ movie.Movie_ID }} {% endblock %}
+{% block script %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='listboxTransfer.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='ListBoxTransfer.js') }}"></script>
+{% endblock %}
+{% block content %} 
+ <ul class="breadcrumb">
+	<li><a href="{{ url_for('movies.index', page=1) }}">Movies</a></li>
+	<li><a href="#">Add New Genre</a></li>
+	
+	<div class="search-container">
+		<form method="post" action="{{ url_for('movies.search') }}">
+			<input id="text" type="text" placeholder="Search for Movie title.." name="keyword">
+			<button class="w3-button w3-black" type="submit">Search</button>
+		</form>
+	</div>
+</ul>
+
+<h1>Add Genre for {{ movie.Movie_Title }} with Movie ID: {{ movie.Movie_ID }}</h1>
+	
+  {% set messages = get_flashed_messages() %}
+  {% if messages %}
+	<div class="w3-panel w3-pale-yellow w3-border">
+		{% for message in messages %}
+			<h3> {{ message }} </h3>
+		{% endfor %}
+	</div>	
+  {% endif %}
+
+	
+	<table id="formtable" class="w3-border w3-light-grey">
+		<tr>
+			<td>
+			        <div id="movieItems" class="w3-panel">
+						<label for="srcListBox"><b>Available Genres</b></label><br/>
+						<select multiple="multiple" id='srcListBox'>
+							{% for genre in genres %}
+								{% set option = genre.Category_ID|string  + '. ' + genre.Category_Name %}
+								<option value="{{ option }}"> {{ option }} </option>
+							{% endfor %}
+						</select>
+						
+						<br><label for="srcListBox"><b>Press <kbd>Ctrl</kbd> and <kbd>Shift</kbd> to select multiple options</b></label><br/>
+					</div>
+			</td>
+			<td id="centercell">
+					<div class="btnGroup w3-padding-64" id="btnDiv">
+						<p><input class="w3-button w3-black" type='button' id='AddOption' value=">>" 
+						onclick="copySelected('srcListBox','dstListBox')"></p>
+					
+						<p><input class="w3-button w3-black" type='button' id='RemoveOption' value='<<' 
+						onclick="copySelected('dstListBox','srcListBox')"></p>
+					
+						<p><input class="w3-button w3-black" type='button' id='Reset' value ='Reset' 
+						onclick="moveAll('dstListBox','srcListBox')"></p>
+					</div>
+			</td>
+			<td>
+					<div id="listForm" class="listboxForm">
+						<form method="POST">   
+							<label for="dstListBox"><b>Selected Options</b></label><br/>
+							<select multiple="multiple" id='dstListBox' name='Selected' onclick="stopDeselection('dstListBox')" class="form-control">
+							</select>
+							<p><button class="w3-button w3-black" onclick="return confirm('You are about to add genre to {{ movie.Movie_Title }}')"
+							type="submit">Submit</button></p>
+						</form>
+					</div>			
+			</td>
+		</tr>
+	</table>
+	
+{% endblock %}

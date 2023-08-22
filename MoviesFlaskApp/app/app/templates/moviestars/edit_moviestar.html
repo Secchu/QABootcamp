@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %} Editing Moviestar: {{ star.Star_Name }} {% endblock %}
+{% block script %}
+	<script type="text/javascript" src="{{ url_for('static', filename='delete.js') }}"></script>
+    <script type="text/javascript">
+
+        window.onload = function() {
+
+          //Get a reference to the link on the page
+          // with an id of "mylink"
+          var a = document.getElementById("cancel");
+		  
+          a.onclick = function() {
+		  
+			var title = document.getElementById("name")
+			title.innerHTML = "{{ star.Star_Name }}"
+			title.value = "{{ star.Star_Name }}"
+			
+			alert("The Moviestar with ID {{ star.Star_ID }} have been reset to their original values")
+          }
+        }
+    </script>
+{% endblock %}
+{% block content %} 
+
+	<div class="search-container">
+		<form method="post" action="{{ url_for('moviestars.search') }}">
+			<input id="text" type="text" placeholder="Search for Moviestar.." name="keyword">
+			<button class="w3-button w3-black" type="submit">Search</button>
+		</form>
+	</div>
+
+<h1> Editing Moviestar: {{ star.Star_Name }} </h1>
+
+  {% set messages = get_flashed_messages() %}
+  {% if messages %}
+	<div class="w3-panel w3-pale-yellow w3-border">
+		<h3> Please correct the following errors </h3>
+			<ol class="w3-ul">
+				{% for message in messages %}
+					<li> {{ message }} </li>
+				{% endfor %}
+			</ol>
+	</div>	
+  {% endif %}
+
+<span id="delete">
+<form method="post" class="w3-container">
+	<label for="id"><b>ID</b></label>
+	<input type="number" value="{{ star.Star_ID }}" name="id" min="1" disabled required>
+    <label for="name"><b>Name</b></label>
+    <input type="text" id="name" value="{{ star.Star_Name }}" name="name" required>
+
+    <p><button class="w3-button w3-black" onclick="return confirm('You are about to edit Moviestar with ID {{ star.Star_ID }}')" 
+	type="submit">Save</button> <a id="cancel" class="bttn w3-button w3-black">Reset</a></p>
+</form>
+
+<p><a class="alink" href="#" onclick="deleteEntity('delete','{{ url_for('moviestars.delete',Id=star.Star_ID) }}','{{ star.Star_Name }}')">
+Delete Moviestar {{ star.Star_Name }}</a> 
+<a class="alink" href="{{ url_for('moviestars.index', page=1) }}">All Moviestars</a></p>
+</span>
+{% endblock %}
