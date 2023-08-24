@@ -1,0 +1,11 @@
+[
+    {
+        "Statement": "INSERT INTO Contacts value {'Id': 'Mike001', 'Name': 'Mike', 'Surname': 'Taylor', 'Mobile' : '02345'}"
+    },
+    {
+        "Statement": "INSERT INTO Contacts value {'Id': 'Jennifer002', 'Name': 'Jenny', 'Surname': 'Harris', 'Mobile' : '999323'}"
+    },
+    {
+        "Statement": "INSERT INTO Contacts value {'Id': 'Paul003', 'Name': 'Paul', 'Surname': 'Wells', 'Mobile' : '011343'}"
+    }
+]
