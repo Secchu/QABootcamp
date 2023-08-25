@@ -6,7 +6,7 @@ Quick Start
 ===========
 You will need to create the dynamodb table called Contacts in your AWS account. Its probably easier just to create this table using the AWS console.
 For the structure of the table refer to Contacts.cs. The main requirement is the Id field needs to be the hashkey. Note the hashkey is of type string.
-You can create the other fields such as Id, Name, Surname and Mobile if you want.
+This is the partition key. You can manually create the records in the AWS console if you want. Refer to Contacts.cs for the attribute fields.
 
 You will also need to create the API Gateway routes in API Gateway -> API -> Create API -> HTTP API Build -> Add Integration.
 
@@ -14,7 +14,8 @@ You will need to create a route for each function in ContactsApiLambda.cs.
 
 You will also need to publish the code function by function. Use the AWSToolkit. You will need to create an IAM role with the following permissions
 1. LambdaExecutionRole
-2. Also permissions to access the Lambda table. 
+2. Also you need to add permissions to access the Lambda table. You need to add a policy. 
+3. I am also assuming you have a CLI user setup with sufficient rights or you won't be able to publish the code.
 
 You will need to specify this role for each published function. You can use the specify the LambdaExecutionRole when publishing and uploading the code
 to AWS. However you will need to edit this role and add policies to enable permissions to access the dynamodb table.
@@ -52,3 +53,8 @@ random.
 Cleaning up
 ===========
 Delete your resources when finished so you don't get charged.
+
+Updates
+=======
+A good addition to the code is to add searching capabilities. Please don't use Scan. It is expensive operation. Set up the Sort key and use Indexes such as
+global and local index if you need even more complicated search capabilities. Please refer to the AWS documentation.

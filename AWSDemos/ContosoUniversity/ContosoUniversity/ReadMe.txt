@@ -37,4 +37,4 @@ https://jjtfbral0a.execute-api.eu-west-2.amazonaws.com/Prod
 
 More Information
 ================
-https://d2n2rgkzriycso.cloudfront.net/Demos/CloudFormationDemos.html
+https://d2n2rgkzriycso.cloudfront.net/Demos/MyDemos.html
