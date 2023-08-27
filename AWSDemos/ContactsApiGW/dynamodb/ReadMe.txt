@@ -43,7 +43,7 @@ Getting Sample Data in the Contacts dynamodb table
 (The following is windows command. If your using Linux refer to the AWS documentation. I don't think its much different although I haven't had time
 to check)
 
-> aws dynamodb batch-execute-statements --statements file://partiqbatch.json
+> aws dynamodb batch-execute-statement --statements file://partiqlbatch.json
 
 You should then recieve JSON response indicating that the records have been added.
 

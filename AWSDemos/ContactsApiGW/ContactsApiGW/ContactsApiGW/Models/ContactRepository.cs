@@ -28,11 +28,11 @@ namespace ContactsApiGW.Models
             return contacts;
         }
 
-        public async Task<Contact> GetContactAsync(string id) => await dbContext.LoadAsync<Contact>(id);
+        public async Task<Contact> GetContactAsync(string Id) => await dbContext.LoadAsync<Contact>(Id);
 
-        public async Task DeleteContactAsync(string id)
+        public async Task DeleteContactAsync(string Id)
         {
-            var contact = await GetContactAsync(id);
+            var contact = await GetContactAsync(Id);
             await dbContext.DeleteAsync(contact);
         }
     }

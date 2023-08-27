@@ -48,10 +48,10 @@ public class ContactsApiLambda
     {
         try
         {
-            string id = request.PathParameters["id"];
-            LambdaLogger.Log($"Deleting contact with {id}");
+            string Id = request.PathParameters["Id"];
+            LambdaLogger.Log($"Deleting contact with {Id}");
 
-            await ContactRepo.DeleteContactAsync(id);
+            await ContactRepo.DeleteContactAsync(Id);
 
             return new APIGatewayHttpApiV2ProxyResponse
             {
@@ -65,8 +65,8 @@ public class ContactsApiLambda
     public async Task<Contact> GetContactByIdAsync(APIGatewayHttpApiV2ProxyRequest request, 
     ILambdaContext context)
     {
-        string id = request.PathParameters["id"];
-        LambdaLogger.Log($"Retrieving contact with {id}");
-        return await ContactRepo.GetContactAsync(id);
+        string Id = request.PathParameters["Id"];
+        LambdaLogger.Log($"Retrieving contact with {Id}");
+        return await ContactRepo.GetContactAsync(Id);
     }
 }
