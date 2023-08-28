@@ -47,6 +47,16 @@ var aesIV = Convert.ToBase64String(File.ReadAllBytes(@"C:\temp\IV.txt"));
 Console.WriteLine($"aes key: {aesKey}");
 Console.WriteLine($"IV: {aesIV}");
 
+Adding Users to users dynamodb table
+====================================
+The password needs to be encrypted. You could use the snipplet below.
+
+AesEncryptionProvider provider =
+new AesEncryptionProvider(key, iv);
+
+string encrypt = provider.Encrypt("YOUR PASSWORD");
+
+Console.WriteLine($"PASSWORD: {encrypt}");
 
 
 ## Here are some steps to follow from Visual Studio:
