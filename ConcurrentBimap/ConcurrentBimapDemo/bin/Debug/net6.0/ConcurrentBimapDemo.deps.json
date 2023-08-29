@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "ConcurrentBimapDemo/1.0.0": {
+        "dependencies": {
+          "ConcurrentBimap": "1.0.0"
+        },
+        "runtime": {
+          "ConcurrentBimapDemo.dll": {}
+        }
+      },
+      "ConcurrentBimap/1.0.0": {
+        "runtime": {
+          "ConcurrentBimap.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ConcurrentBimapDemo/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ConcurrentBimap/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

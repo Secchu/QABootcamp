@@ -1,0 +1,11 @@
+C:\Users\chu\Source\Repo\ConcurrentBimap\ConcurrentBimap\bin\Debug\net6.0\ConcurrentBimap.deps.json
+C:\Users\chu\Source\Repo\ConcurrentBimap\ConcurrentBimap\bin\Debug\net6.0\ConcurrentBimap.dll
+C:\Users\chu\Source\Repo\ConcurrentBimap\ConcurrentBimap\bin\Debug\net6.0\ConcurrentBimap.pdb
+C:\Users\chu\Source\Repo\ConcurrentBimap\ConcurrentBimap\obj\Debug\net6.0\ConcurrentBimap.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chu\Source\Repo\ConcurrentBimap\ConcurrentBimap\obj\Debug\net6.0\ConcurrentBimap.AssemblyInfoInputs.cache
+C:\Users\chu\Source\Repo\ConcurrentBimap\ConcurrentBimap\obj\Debug\net6.0\ConcurrentBimap.AssemblyInfo.cs
+C:\Users\chu\Source\Repo\ConcurrentBimap\ConcurrentBimap\obj\Debug\net6.0\ConcurrentBimap.csproj.CoreCompileInputs.cache
+C:\Users\chu\Source\Repo\ConcurrentBimap\ConcurrentBimap\obj\Debug\net6.0\ConcurrentBimap.dll
+C:\Users\chu\Source\Repo\ConcurrentBimap\ConcurrentBimap\obj\Debug\net6.0\refint\ConcurrentBimap.dll
+C:\Users\chu\Source\Repo\ConcurrentBimap\ConcurrentBimap\obj\Debug\net6.0\ConcurrentBimap.pdb
+C:\Users\chu\Source\Repo\ConcurrentBimap\ConcurrentBimap\obj\Debug\net6.0\ref\ConcurrentBimap.dll
