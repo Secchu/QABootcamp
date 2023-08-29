@@ -1,0 +1,11 @@
+C:\Users\chu\Source\BoyerMooreAlgorithm\BoyerMooreSolution\BoyerMooreExtension\bin\Debug\net6.0\BoyerMooreExtension.deps.json
+C:\Users\chu\Source\BoyerMooreAlgorithm\BoyerMooreSolution\BoyerMooreExtension\bin\Debug\net6.0\BoyerMooreExtension.dll
+C:\Users\chu\Source\BoyerMooreAlgorithm\BoyerMooreSolution\BoyerMooreExtension\bin\Debug\net6.0\BoyerMooreExtension.pdb
+C:\Users\chu\Source\BoyerMooreAlgorithm\BoyerMooreSolution\BoyerMooreExtension\obj\Debug\net6.0\BoyerMooreExtension.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chu\Source\BoyerMooreAlgorithm\BoyerMooreSolution\BoyerMooreExtension\obj\Debug\net6.0\BoyerMooreExtension.AssemblyInfoInputs.cache
+C:\Users\chu\Source\BoyerMooreAlgorithm\BoyerMooreSolution\BoyerMooreExtension\obj\Debug\net6.0\BoyerMooreExtension.AssemblyInfo.cs
+C:\Users\chu\Source\BoyerMooreAlgorithm\BoyerMooreSolution\BoyerMooreExtension\obj\Debug\net6.0\BoyerMooreExtension.csproj.CoreCompileInputs.cache
+C:\Users\chu\Source\BoyerMooreAlgorithm\BoyerMooreSolution\BoyerMooreExtension\obj\Debug\net6.0\BoyerMooreExtension.dll
+C:\Users\chu\Source\BoyerMooreAlgorithm\BoyerMooreSolution\BoyerMooreExtension\obj\Debug\net6.0\refint\BoyerMooreExtension.dll
+C:\Users\chu\Source\BoyerMooreAlgorithm\BoyerMooreSolution\BoyerMooreExtension\obj\Debug\net6.0\BoyerMooreExtension.pdb
+C:\Users\chu\Source\BoyerMooreAlgorithm\BoyerMooreSolution\BoyerMooreExtension\obj\Debug\net6.0\ref\BoyerMooreExtension.dll
