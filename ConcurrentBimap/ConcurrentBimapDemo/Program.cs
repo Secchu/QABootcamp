@@ -144,7 +144,7 @@ if (colours.Count > 0)
     foreach (RGB col in Rgb)
         Console.WriteLine(col);
 
-    if (Rgb.Length != Rgb.Length)
+    if (keys.Length != Rgb.Length)
         Console.WriteLine("Something definitely wrong");
 
     var enumer = colours.getLeftDictionaryEnumerator();
