@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>This is a basic demo on AWS <strong>Simple Email Service.</strong></p>
+
+    <h3>Click on <a asp-action="Feedback">Feedback</a> to test the Simple Email Service demo</h3>
+
+    <p>When feedback is sent the Amazon Simple Mail service will send an notification email to the configured 
+       identified user. You must provide all the mail settings in <b>Parameter Store.</b> This is located in
+       Systems Manager. 
+    </p>
+
+    <div class="alert alert-warning" role="alert">
+        <h3>Do not store Mail Settings in <b>appsettings.json</b></h3>
+        <p>This is a security risk. If you can use <b>Secrets Manager</b> becuase it has key rotation. 
+         <b>Parameter Store</b> is is much more secure than storing your secrets locally or even hardcoding 
+         your secrets in code.</p>
+    </div>
+</div>
+
+

@@ -1,0 +1,61 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+form p label {
+    width: 10%;
+}
+
+form p input[type="text"], form p input[type="number"], input[type="email"], form p select {
+    width: 40%;
+}
+
+form p span {
+    width: 40%;
+    color: Red;
+}
+
+form p textarea {
+    width: 40%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+}
+
+.btn:hover {
+    color: lightgray;
+    box-shadow: 5px 2px grey;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+    opacity: 0.1;
+    color: lightcyan;
+    font-weight: bold;
+}
+
+.mynav
+{
+    background-color: lightgoldenrodyellow;
+    border: #FFF;
+}

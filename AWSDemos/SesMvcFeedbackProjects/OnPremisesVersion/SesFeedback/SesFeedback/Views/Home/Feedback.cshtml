@@ -1,0 +1,29 @@
+﻿@model Feedback
+@{
+    ViewData["Title"] = "Feedback";
+}
+
+<h3>Feedback Form</h3>
+
+<form method="post">
+    <p>
+        <label asp-for="Name"><strong>Your Name:</strong></label><br />
+        <input asp-for="Name" required />
+    </p>
+    <p>
+        <label asp-for="Email"><strong>Email</strong></label><br />
+        <input type="email" asp-for="Email" required/><br />
+    </p>
+    <br />
+    <p>
+        <label asp-for="Subject"><strong>Subject:</strong></label><br />
+        <input asp-for="Subject" required/><br />
+    </p>
+    <p>
+        <label asp-for="Content"><strong>Content:</strong></label><br>
+        <textarea placeholder="Enter your feedback here....." asp-for="Content" required></textarea><br />
+    </p>
+
+    <p><button class="btn btn-primary" type="submit">Submit</button></p>
+</form>
+

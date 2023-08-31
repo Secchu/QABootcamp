@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "dgSpecHash": "s5Ns3rrkOGtAcdlx0DuP6I24Y3EWghaty99gGSJB06o3duW9SEGtbeyTy0e0Nychdj7g/NY7o5li1gRnyayZGw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\chu\\Source\\Repos\\SesFeedback\\SesFeedback\\SesFeedback.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\chu\\.nuget\\packages\\amazon.extensions.configuration.systemsmanager\\5.1.0\\amazon.extensions.configuration.systemsmanager.5.1.0.nupkg.sha512",
+    "C:\\Users\\chu\\.nuget\\packages\\awssdk.appconfigdata\\3.7.0.23\\awssdk.appconfigdata.3.7.0.23.nupkg.sha512",
+    "C:\\Users\\chu\\.nuget\\packages\\awssdk.core\\3.7.201.7\\awssdk.core.3.7.201.7.nupkg.sha512",
+    "C:\\Users\\chu\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.7\\awssdk.extensions.netcore.setup.3.7.7.nupkg.sha512",
+    "C:\\Users\\chu\\.nuget\\packages\\awssdk.simpleemail\\3.7.200.27\\awssdk.simpleemail.3.7.200.27.nupkg.sha512",
+    "C:\\Users\\chu\\.nuget\\packages\\awssdk.simplesystemsmanagement\\3.7.12.9\\awssdk.simplesystemsmanagement.3.7.12.9.nupkg.sha512",
+    "C:\\Users\\chu\\.nuget\\packages\\microsoft.extensions.configuration\\2.0.2\\microsoft.extensions.configuration.2.0.2.nupkg.sha512",
+    "C:\\Users\\chu\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\2.0.2\\microsoft.extensions.configuration.abstractions.2.0.2.nupkg.sha512",
+    "C:\\Users\\chu\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\2.0.0\\microsoft.extensions.dependencyinjection.abstractions.2.0.0.nupkg.sha512",
+    "C:\\Users\\chu\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\2.0.0\\microsoft.extensions.logging.abstractions.2.0.0.nupkg.sha512",
+    "C:\\Users\\chu\\.nuget\\packages\\microsoft.extensions.primitives\\2.0.0\\microsoft.extensions.primitives.2.0.0.nupkg.sha512",
+    "C:\\Users\\chu\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.4.0\\system.runtime.compilerservices.unsafe.4.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}
