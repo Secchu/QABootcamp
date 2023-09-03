@@ -1,6 +1,8 @@
 Project
 =======
-This is a project is a Lambda Authorizer using the custom authorization scheme The project enables you to add security to your API Lambda Functions. 
+This project is a Lambda Authorizer that uses the custom authorization scheme to authorizing API Gateway requests and authorizes users stored in a dynamodb 
+table. Passwords in the dynamodb table are encrypted. The project enables you to add security to your API Lambda Functions. 
+
 You will need to publish your own API Lambda functions and add this project to your solution. When published correctly the API Gatway will validate
 the users credentials and issue a valid JWT token for 5 minutes. If authorized it will return the appropiate access policy.
 

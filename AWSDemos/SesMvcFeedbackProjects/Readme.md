@@ -4,8 +4,8 @@ The solution consists of two separate projects unrelated and each project can be
 with razor views. 
 
 Both projects provide an interface for the user to send feedback via a post request using a feedback form. When the 
-feedback form is recieved SES is used to send an email notifying the verified identity on the AWS account that feedback
-has been recieved. Note your SES email notification will likely appear in your junk folder as the identity of the
+feedback form is recieved Simple Email Service is used to send an email notifying the verified identity on the AWS account 
+that feedback has been recieved. Note your SES email notification will likely appear in your junk folder as the identity of the
 sender cannot be confirmed.
 
 Another point about these two projects is to learn how to convert onpremises MVC code and publish it as a AWS

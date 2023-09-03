@@ -1,6 +1,7 @@
 Project
 =======
-A basic AWS API Gateway application for storing contact information. 
+A serverless AWS API Gateway application for storing contact information in a Dynamodb table. The project contains a series of Lambda functions 
+that can be published to API Gateway. The API's provide CRUD operations for manipulating contact data in a Dynamodb table.
 
 Quick Start
 ===========
