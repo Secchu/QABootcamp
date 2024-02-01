@@ -1,5 +1,4 @@
 Author: Sec Chu
-Email: duongchu@hotmail.com
 
 QABootcamp Repository Project List
 ===================================
